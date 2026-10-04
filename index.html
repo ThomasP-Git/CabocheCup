@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Unity Web Player | My project (1)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -98,26 +99,17 @@
       // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
       // expected to change.
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
-
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-
-
-      } else {
-        // Desktop style: Render the game canvas container in a window that can be maximized to fullscreen:
-        fullscreenContainer.style.width = "1180px";
-        fullscreenContainer.style.height = "650px";
+      var ratio = 1180 / 650;
+      function resizeGame() {
+      var w = window.innerWidth, h = window.innerHeight;
+      var cw = w, ch = w / ratio;
+      if (ch > h) { ch = h; cw = h * ratio; }
+      fullscreenContainer.style.width = cw + "px";
+      fullscreenContainer.style.height = ch + "px";
       }
+      resizeGame();
+      window.addEventListener("resize", resizeGame);
+      window.addEventListener("orientationchange", resizeGame);
 
 
       var script = document.createElement("script");
