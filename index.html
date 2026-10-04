@@ -101,6 +101,7 @@
 
       var ratio = 1180 / 650;
       function resizeGame() {
+      if (document.fullscreenElement || document.webkitFullscreenElement) return;
       var w = window.innerWidth, h = window.innerHeight;
       var cw = w, ch = w / ratio;
       if (ch > h) { ch = h; cw = h * ratio; }
@@ -110,6 +111,8 @@
       resizeGame();
       window.addEventListener("resize", resizeGame);
       window.addEventListener("orientationchange", resizeGame);
+      document.addEventListener("fullscreenchange", resizeGame);
+      document.addEventListener("webkitfullscreenchange", resizeGame);
 
 
       var script = document.createElement("script");
