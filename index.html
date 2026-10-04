@@ -114,7 +114,8 @@
       document.addEventListener("fullscreenchange", resizeGame);
       document.addEventListener("webkitfullscreenchange", resizeGame);
 
-
+      if (/iPhone|iPod/i.test(navigator.userAgent)) document.querySelector("#unity-fullscreen-button").style.display = "none";
+      
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
